@@ -31,7 +31,7 @@ collate_roclet <- function() {
 }
 
 #' @S3method roc_process collate
-roc_process.collate <- function(roclet, partita, base_path) {
+roc_process.collate <- function(roclet, partita, base_path, paths) {
   topo <- topo_sort()
 
   for (partitum in partita) {

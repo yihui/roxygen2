@@ -6,7 +6,7 @@
 #' @export
 parse.file <- function(file, env, env_hash) {
   srcfile <- srcfile(file)
-  
+
   parse_cache$compute(c(env_hash, readLines(file, warn = FALSE)), {
     src_refs <- attributes(parse(srcfile$filename, srcfile = srcfile))$srcref
     pre_refs <- prerefs(srcfile, src_refs)
@@ -18,7 +18,7 @@ parse.file <- function(file, env, env_hash) {
 
     stopifnot(length(src_parsed) == length(pre_parsed))
 
-    mapply(c, src_parsed, pre_parsed, SIMPLIFY = FALSE)    
+    mapply(c, src_parsed, pre_parsed, SIMPLIFY = FALSE)
   })
 }
 
@@ -32,16 +32,17 @@ parse.file <- function(file, env, env_hash) {
 parse.files <- function(paths) {
   # Source all files into their own environment so that parsing code can
   # access them.
-  env <- new.env(parent = parent.env(globalenv()))
+  # env <- new.env(parent = parent.env(globalenv()))  # Why?
+  env <- new.env(parent = globalenv())
   env_hash <- suppressWarnings(digest(env))
-  
+
   setPackageName("test", env)
   lapply(paths, sys.source, chdir = TRUE, envir = env)
-  
-  unlist(lapply(paths, parse.file, env = env, env_hash = env_hash), 
+
+  unlist(lapply(paths, parse.file, env = env, env_hash = env_hash),
     recursive = FALSE)
 }
-  
+
 #' Text-parsing hack using tempfiles for more facility.
 #'
 #' @param text stringr containing text to be parsed

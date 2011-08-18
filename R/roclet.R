@@ -9,19 +9,19 @@ new_roclet <- function(obj, subclass = NULL) {
 is.roclet <- function(x) inherits(x, "roclet")
 
 #' Process roclet and capture results.
-#' 
+#'
 #' @param roclet to use for processing
 #' @param input character vector of paths to files to process
-#' @param base_path base directory 
+#' @param base_path base directory
 #' @seealso \code{\link{roxygenise}} for user-friendly interface
 #' @keywords internal
 #' @export
 roc_proc <- function(roclet, paths, base_path) {
   stopifnot(is.roclet(roclet))
-  
+
   parsed <- parse.files(paths)
-  roc_process(roclet, parsed, base_path)
-} 
+  roc_process(roclet, parsed, base_path, paths)
+}
 
 #' Process roclet on string and capture results.
 #' Useful for testing.
@@ -32,14 +32,14 @@ roc_proc <- function(roclet, paths, base_path) {
 #' @keywords internal
 roc_proc_text <- function(roclet, input) {
   stopifnot(is.roclet(roclet))
-  
+
   parsed <- parse.text(input)
-  roc_process(roclet, parsed, base_path = ".")
-} 
+  roc_process(roclet, parsed, base_path = ".", NULL)
+}
 
 
 #' Process roclet and output results.
-#' 
+#'
 #' @param roclet to use for processing
 #' @param input character vector of paths to files to process
 #' @param base_path base directory in which to save output
@@ -59,6 +59,6 @@ roc_output <- function(roclet, results, base_path) {
   UseMethod("roc_output", roclet)
 }
 
-roc_process <- function(roclet, partita, base_path) {
+roc_process <- function(roclet, partita, base_path, paths) {
   UseMethod("roc_process", roclet)
 }

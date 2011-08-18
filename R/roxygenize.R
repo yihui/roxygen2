@@ -3,7 +3,7 @@
 #' This is the workhorse function that uses roclets, the built-in document
 #' tranformation functions, to build all documentation for a package.  See
 #' the documentation for the individual roclets, \code{\link{rd_roclet}},
-#' \code{\link{namespace_roclet}} and \code{\link{collate_roclet}}, for 
+#' \code{\link{namespace_roclet}} and \code{\link{collate_roclet}}, for
 #' documentation on how to use each one.
 #'
 #' @param package.dir the package's top directory
@@ -22,7 +22,8 @@ roxygenize <- function(package.dir,
                        copy.package=package.dir != roxygen.dir,
                        overwrite=TRUE,
                        unlink.target=FALSE,
-                       roclets=c("collate", "namespace", "rd")) {
+                       roclets=list(R = c("collate", "namespace", "rd"),
+                                    demo = c("demo"))) {
 
   skeleton <- c(roxygen.dir, file.path(roxygen.dir, c("man", "inst")))
 
@@ -36,9 +37,11 @@ roxygenize <- function(package.dir,
   }
 
   roxygen.dir <- normalizePath(roxygen.dir)
+
+  ## R roclets:
   r_files <- dir(file.path(roxygen.dir, "R"), "[.Rr]$", full.names = TRUE)
 
-  # If description present, use Collate to order the files 
+  # If description present, use Collate to order the files
   # (but still include them all, and silently remove missing)
   DESCRIPTION <- file.path(package.dir, "DESCRIPTION")
   if (file.exists(DESCRIPTION)) {
@@ -47,7 +50,7 @@ roxygenize <- function(package.dir,
     con <- textConnection(raw_collate)
     on.exit(close(con))
     collate <- scan(con, "character", sep = " ", quiet = TRUE)
-    
+
     collate_path <- file.path(roxygen.dir, "R", collate)
     collate_exists <- Filter(file.exists, collate_path)
     r_files <- c(collate_exists, setdiff(r_files, collate_exists))
@@ -60,15 +63,17 @@ roxygenize <- function(package.dir,
       lapply(pkgs[pkgs != "R"], require, character.only = TRUE)
     }
   }
-  
+
   parsed <- parse.files(r_files)
 
-  roclets <- str_c(roclets, "_roclet", sep = "")
-  for (roclet in roclets) {
-    roc <- match.fun(roclet)()
-    results <- roc_process(roc, parsed, roxygen.dir)
-    roc_output(roc, results, roxygen.dir)
-  }
+  exec_roclets(roclets$R, parsed, roxygen.dir, r_files)
+
+
+  ## Demo roclets:
+  demo_files <- dir(file.path(roxygen.dir, "demo"), "[.Rr]$", full.names = TRUE)
+  parsed <- parse.files(demo_files)
+
+  exec_roclets(roclets$demo, parsed, roxygen.dir, demo_files)
 }
 
 #' @rdname roxygenize
@@ -101,5 +106,20 @@ copy.dir <- function(source,
     if (verbose)
       cat(sprintf('%s -> %s', source.file, target.file), '\n')
     file.copy(source.file, target.file, overwrite=overwrite)
+  }
+}
+
+# Execute a list of roclets on parsed files.
+#
+# @param roclets character vector of roclet names
+# @param parsed parsed files
+# @param roxygen.dir where to create roxygen output
+# @param paths character vector of file names
+exec_roclets <- function(roclets, parsed, roxygen.dir, paths) {
+  roclets <- str_c(roclets, "_roclet", sep = "")
+  for (roclet in roclets) {
+    roc <- match.fun(roclet)()
+    results <- roc_process(roc, parsed, roxygen.dir, paths)
+    roc_output(roc, results, roxygen.dir)
   }
 }
