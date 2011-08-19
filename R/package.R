@@ -30,13 +30,16 @@ package <- function(roxygen.dir) {
   cache$.files <- dir_list(roxygen.dir)
   cache$.files[["R"]] <- r_files_ordered(cache$.files, roxygen.dir)
 
-  files <- function(what = NULL) {
+  files <- function(what = NULL, flat = TRUE) {
     if ( is.null(what) )
       files <- cache$.files
     else
       files <- cache$.files[[what]]
 
-    unname(unlist(files))
+    if ( flat )
+      unname(unlist(files))
+    else
+      files
   }
 
   list(files = files, compute = compute, reset = reset, close = close)

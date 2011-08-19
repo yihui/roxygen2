@@ -15,7 +15,7 @@ write.description <- function(desc, file = "") {
 
 # Print the field-value pair to a given file or standard out.
 cat.description <- function(field, value, file='') {
-  comma_sep <- any(field %in% c("Suggests", "Depends", "Extends", "Imports"))
+  comma_sep <- any(field %in% c("Suggests", "Depends", "Extends", "Imports", "Build-Depends"))
   individual_lines <- field %in% c("Collate")
   
   if (comma_sep) {

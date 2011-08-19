@@ -59,6 +59,6 @@ roc_output <- function(roclet, results, base_path) {
   UseMethod("roc_output", roclet)
 }
 
-roc_process <- function(roclet, partita, base_path, paths) {
+roc_process <- function(roclet, base_path) {
   UseMethod("roc_process", roclet)
 }
