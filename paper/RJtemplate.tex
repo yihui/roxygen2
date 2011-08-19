@@ -1,0 +1,162 @@
+\title{\pkg{roxygen2}: In-Source Documentation for R}
+\author{by Author One, Author Two and Author Three}
+
+\maketitle
+
+\abstract{
+  Writing software documentation is hard work. \pkg{roxygen2}
+  simplifies this task by coupling source code with documentation, and
+  producing R compatible Rd files. Additionally, \pkg{roxygen2}
+  automatizes the generation of R package infrastructure files. This
+  paper describes the usage of \pkg{roxygen2}---its features and
+  integration into the development workflow---with an illustrative
+  example package.
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction\label{intro}}
+
+\begin{quote}
+  ``I believe that the time is ripe for significantly better
+  documentation of programs, and that we can best achieve this by
+  considering programs to be works of literature.''
+\end{quote}
+said \citeauthor{Knuth@1992} in his well-known book ``Literate
+Programming'' \citep{Knuth@1992}, where he defined a methodology that
+combines a programming language with a documentation language. Since
+then, a lot of tools have been developed in the sense of this
+term. Roughly, two different approaches have emerged: \textit{classical
+  literate programming} systems like Sweave \citep{Leisch@2002} with
+interleaving code and documentation chunks; and \textit{interface
+  documentation} tools like Doxygen \citep{doxygen} and Javadoc
+\citep{javadoc} with pseudo statements written as comments in the
+source code and then processed to documentation. \pkg{roxygen2}
+\citep{roxygen2} affiliates in the second approach with Doxygen and
+Javadoc as inspirations. In addition to the common in-source
+documentation of functions, methods, etc., R specific in-source
+directives for namespace handling and source file collation are
+available.
+
+
+% Using Roxygen couples source code with documentation which simplifies
+% holding the documentation consistent. All information concerning one
+% logical part, like a function, class, source file or package, is
+% centralized on one location, namely in front of this logical
+% part. Additionally, Roxygen automatizes the generation of package
+% infrastructure files (like the \file{NAMESPACE} and \file{DESCRIPTION}
+% files) and allows the generation of call graphs.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Basics\label{basics}}
+
+\begin{enumerate}
+  \item Idea of roxygen (graph)
+  \item How to write roxygen commands
+  \item Roclets
+  \item \code{roxygenize}
+\end{enumerate}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{In-source documentation\label{doc}}
+
+
+\begin{enumerate}
+  \item Rd roclet
+\end{enumerate}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Further in-source specifications\label{doc}}
+
+\begin{enumerate}
+  \item Collate and namespace roclet
+\end{enumerate}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{\pkg{roxygen2} in the wild\label{doc}}
+
+\begin{enumerate}
+  \item \pkg{stringr}, \pkg{ggplot2}, \pkg{archetypes}
+  \item see \url{http://crantastic.org/tags/roxygen2} which lists all
+    packages with \code{Build-Depends: roxygen2} set in the
+    \code{DESCRIPTION} file.
+\end{enumerate}
+ 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Outlook\label{outlook}}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Acknowledgment}
+
+\pkg{roxygen}, the predecessor of \pkg{roxygen2}, was a Google Summer
+of Code Project in 2008 \citep{roxygen}.
+
+
+
+
+
+% Introductory section which may include references in parentheses, say
+% \citep{R:Ihaka+Gentleman:1996} or cite a reference such as
+% \citet{R:Ihaka+Gentleman:1996} in the text.
+
+% \section{Section title in sentence case}
+
+% This section may contain a figure such as Figure \ref{figure:onecolfig}.
+
+% \begin{figure}
+% \vspace*{.1in}
+% \framebox[\textwidth]{\hfill \raisebox{-.45in}{\rule{0in}{1in}}
+%                       A picture goes here \hfill}
+% \caption{\label{figure:onecolfig}
+% A normal figure only occupies one column.}
+% \end{figure}
+
+% \section{Another section}
+
+% There will likely be several sections, perhaps including code snippets, such
+% as
+% \begin{example}
+%   x <- 1:10
+%   result <- myFunction(x)
+% \end{example}
+
+% \section{Summary}
+
+% This file is only a basic article template. For full details of \emph{The R Journal}
+% style and information on how to prepare your article for submission, see the
+% \href{http://journal.r-project.org/latex/RJauthorguide.pdf}{Instructions for Authors}.
+
+\bibliography{references}
+
+\address{Author One\\
+  Affiliation\\
+  Address\\
+  Country}\\
+\email{author1@work}
+
+\address{Author Two\\
+  Affiliation\\
+  Address\\
+  Country}\\
+\email{author2@work}
+
+\address{Author Three\\
+  Affiliation\\
+  Address\\
+  Country}\\
+\email{author3@work}
