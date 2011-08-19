@@ -23,13 +23,20 @@ register.preref.parsers(parse.value, 'demo')
 #'   roc_out(roclet, dir('demo'), "demo")
 #' }
 #' @export
-demo_roclet <- function() {
-  new_roclet(list(), "demo")
+demo_roclet <- function(package) {
+  demo_files <- package$files("demo")
+  demo_files <- grep(".[Rr]$", demo_files, value = TRUE)
+  partita <- package$compute("demo_files", parse.files(demo_files))
+
+  new_roclet(list(partita = partita, paths = demo_files), "demo")
 }
 
 #' @S3method roc_process demo
-roc_process.demo <- function(roclet, partita, base_path, paths) {
+roc_process.demo <- function(roclet, base_path) {
+  partita <- roclet$partita
   partita <- Filter(function(x) !is.null(x$demo), partita)
+
+  paths <- roclet$paths
 
   index <- sapply(partita,
                   function(x) {
@@ -45,7 +52,6 @@ roc_process.demo <- function(roclet, partita, base_path, paths) {
     no_demo <- setdiff(paths, index[, "file"])
     warning("Demo file(s) without @demo tag:\n",
             paste(no_demo, collapse = "\n"), call. = FALSE)
-
     # Set some generic description?
   }
 

@@ -82,12 +82,17 @@ register.preref.parsers(parse.value, 'exportClass', 'exportMethod',
 #' @export
 #' @aliases export exportClass exportMethod S3method import importFrom
 #'   importClassesFrom importMethodsFrom
-namespace_roclet <- function() {
-  new_roclet(list, "namespace")
+namespace_roclet <- function(package) {
+  r_files <- package$files("R")
+  r_files <- grep(".[Rr]$", r_files, value = TRUE)
+  partita <- package$compute("r_files", parse.files(r_files))
+
+  new_roclet(list(partita = partita), "namespace")
 }
 
 #' @S3method roc_process namespace
-roc_process.namespace <- function(roclet, partita, base_path, paths) {
+roc_process.namespace <- function(roclet, base_path) {
+  partita <- roclet$partita
   ns <- character()
   for (partitum in partita) {
     ns_one <- c(

@@ -26,12 +26,17 @@ register.preref.parsers(parse.value, 'include')
 #'   roc_out(roclet, dir('example'), "example")
 #' }
 #' @export
-collate_roclet <- function() {
-  new_roclet(list(), "collate")
+collate_roclet <- function(package) {
+  r_files <- package$files("R")
+  r_files <- grep(".[Rr]$", r_files, value = TRUE)
+  partita <- package$compute("r_files", parse.files(r_files))
+
+  new_roclet(list(partita = partita), "collate")
 }
 
 #' @S3method roc_process collate
-roc_process.collate <- function(roclet, partita, base_path, paths) {
+roc_process.collate <- function(roclet, base_path) {
+  partita <- roclet$partita
   topo <- topo_sort()
 
   for (partitum in partita) {

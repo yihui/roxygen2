@@ -203,15 +203,20 @@ register.srcref.parser('setMethod', function(call, env) {
 #' \dontrun{roc_proc(roclet, "example.R")}
 #' \dontrun{roc_out(roclet, "example.R", ".")}
 #' @export
-rd_roclet <- function() {
-  new_roclet(list(), "had")
+rd_roclet <- function(package) {
+  r_files <- package$files("R")
+  r_files <- grep(".[Rr]$", r_files, value = TRUE)
+  partita <- package$compute("r_files", parse.files(r_files))
+
+  new_roclet(list(partita = partita), "had")
 }
 
 #' @S3method roc_process had
-roc_process.had <- function(roclet, partita, base_path, paths) {
+roc_process.had <- function(roclet, base_path) {
+  partita <- roclet$partita
   # Remove srcrefs with no attached roxygen comments
   partita <- Filter(function(x) length(x) > 1, partita)
-  templates <- dir(file.path(base_path, "max-roxygen"), full = TRUE)
+  templates <- dir(file.path(base_path, "man-roxygen"), full = TRUE)
   template_hash <- digest(lapply(templates, readLines))
 
   topics <- list()
