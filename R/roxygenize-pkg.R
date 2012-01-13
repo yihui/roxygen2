@@ -1,5 +1,12 @@
 
 
+#' @param name A descriptive hook name
+#' @param point An entry point for the hook, i.e., the file path which
+#'   must be available in the package directory to execute the hook
+#'   (e.g., the R directory, the DESCRIPTION file, a specific Rd file)
+#' @param setup A setup function which preprocesses the files needed
+#'   for the roclets of the hook
+#' @param roclets The roclets executed in this hook
 roc_hook <- function(name, point, setup, roclets) {
   list(name = name, point = point, setup = setup, roclets = roclets)
 }
