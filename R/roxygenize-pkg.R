@@ -1,3 +1,6 @@
+#' @include roxygenize.R
+{}
+
 
 
 #' @param name A descriptive hook name
@@ -14,7 +17,7 @@ roc_hook <- function(name, point, setup, roclets) {
 
 
 default_hooks <- function() {
-  list(roc_hook("base", "R", "R", c("collate", "namespace", "rd")))
+  list(roc_hook("base", "R", "parse_r_files", c("collate", "namespace", "rd")))
 
   #list(roc_hook("base", "R", "R", c("collate", "namespace", "rd")),
   #     roc_hook("demoindex", "demo", "demo", c("demo")),
@@ -58,9 +61,7 @@ roxygenize_pkg <- function(package.dir,
 
     cat("yes\n")
 
-    setup <- str_c(hook$setup, "_hook_setup", sep = "")
     roclets <- str_c(hook$roclets, "_roclet", sep = "")
-
     parsed <- match.fun(setup)(package.dir, roxygen.dir)
 
     for (roclet in roclets) {
@@ -72,35 +73,3 @@ roxygenize_pkg <- function(package.dir,
 }
 
 
-
-######################################################################
-
-## TODO: move to an appropriate place
-R_hook_setup <- function(package.dir, roxygen.dir) {
-  r_files <- dir(file.path(roxygen.dir, "R"), "[.Rr]$", full.names = TRUE)
-
-  # If description present, use Collate to order the files
-  # (but still include them all, and silently remove missing)
-  DESCRIPTION <- file.path(package.dir, "DESCRIPTION")
-  if (file.exists(DESCRIPTION)) {
-    desc <- read.description(DESCRIPTION)
-    raw_collate <- desc$Collate %||% ""
-    con <- textConnection(raw_collate)
-    on.exit(close(con))
-    collate <- scan(con, "character", sep = " ", quiet = TRUE)
-
-    collate_path <- file.path(roxygen.dir, "R", collate)
-    collate_exists <- Filter(file.exists, collate_path)
-    r_files <- c(collate_exists, setdiff(r_files, collate_exists))
-    # load the dependencies
-    pkgs <- paste(c(desc$Depends, desc$Imports), collapse = ", ")
-    if (pkgs != "") {
-      pkgs <- gsub("\\s*\\(.*?\\)", "", pkgs)
-      pkgs <- strsplit(pkgs, ",")[[1]]
-      pkgs <- gsub("^\\s+|\\s+$", "", pkgs)
-      lapply(pkgs[pkgs != "R"], require, character.only = TRUE)
-    }
-  }
-
-  parse.files(r_files)
-}
