@@ -81,7 +81,7 @@ copy.dir <- function(source,
 }
 
 
-parse_r_file <- function(package.dir, roxygen.dir) {
+parse_r_files <- function(package.dir, roxygen.dir) {
   r_files <- dir(file.path(roxygen.dir, "R"), "[.Rr]$", full.names = TRUE)
 
   # If description present, use Collate to order the files
