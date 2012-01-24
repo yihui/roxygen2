@@ -11,9 +11,11 @@ Maintainer: Hadley Wickham <hadley@rice.edu>
 Imports:
     stringr (>= 0.5),
     tools,
-    brew
+    brew,
+    utils
 Suggests:
-    testthat
+    testthat,
+    bibtex
 Depends:
     digest
 Collate:
@@ -37,3 +39,4 @@ Collate:
     'rd-parse.R'
     'roclet-demo.R'
     'roxygenize-pkg.R'
+    'roclet-citation.R'

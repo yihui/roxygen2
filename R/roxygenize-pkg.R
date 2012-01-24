@@ -37,7 +37,8 @@ roc_hook <- function(name, point, setup, roclets) {
 #' @export
 default_hooks <- function() {
   list(roc_hook("base", "R", "roc_setup.rd", c("collate", "namespace", "rd")),
-       roc_hook("demo", "demo", "roc_setup.demo", c("demo")))
+       roc_hook("demo", "demo", "roc_setup.demo", "demo"),
+       roc_hook("citation", "CITATION.bib", "roc_setup.citation", "citation"))
 }
 
 

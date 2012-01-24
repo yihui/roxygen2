@@ -102,7 +102,8 @@ roclet <- namespace_roclet()
 \dontrun{roc_out(roclet, "example.R", ".")}
 }
 \seealso{
-  Other roclets: \code{\link{collate_roclet}},
-  \code{\link{demo_roclet}}, \code{\link{rd_roclet}}
+  Other roclets: \code{\link{citation_roclet}},
+  \code{\link{collate_roclet}}, \code{\link{demo_roclet}},
+  \code{\link{rd_roclet}}
 }
 
