@@ -40,3 +40,4 @@ Collate:
     'roclet-demo.R'
     'roxygenize-pkg.R'
     'roclet-citation.R'
+    'roclet-version.R'

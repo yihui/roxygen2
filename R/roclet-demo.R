@@ -80,6 +80,8 @@ roc_output.demo <- function(roclet, results, base_path) {
 
   INDEX <- file.path(base_path, "demo", "00index")
 
+  cat("Creating ", INDEX, file, "\n")
+
   if ( file.exists(INDEX) )
     unlink(INDEX)
 
