@@ -41,3 +41,4 @@ Collate:
     'roxygenize-pkg.R'
     'roclet-citation.R'
     'roclet-version.R'
+    'roclet-rd-aspell.R'

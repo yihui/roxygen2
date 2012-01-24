@@ -190,6 +190,8 @@ roclet <- rd_roclet()
 \seealso{
   Other roclets: \code{\link{citation_roclet}},
   \code{\link{collate_roclet}}, \code{\link{demo_roclet}},
-  \code{\link{namespace_roclet}}
+  \code{\link{namespace_roclet}},
+  \code{\link{rd_aspell_roclet}},
+  \code{\link{version_roclet}}
 }
 

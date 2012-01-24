@@ -35,8 +35,9 @@ roc_hook <- function(name, point, setup, roclets) {
 default_hooks <- function() {
   list(roc_hook("base", "R", "roc_setup.rd", c("collate", "namespace", "rd")),
        roc_hook("demo", "demo", "roc_setup.demo", "demo"),
-       roc_hook("citation", "CITATION.bib", "roc_setup.citation", "citation"),
-       roc_hook("version", "NEWS", "roc_setup.version", "version"))
+       roc_hook("citation", "inst/CITATION.bib", "roc_setup.citation", "citation"),
+       roc_hook("version", "NEWS", "roc_setup.version", "version"),
+       roc_hook("aspell", "man", "roc_setup.rd_aspell", "rd_aspell"))
 }
 
 
@@ -79,7 +80,7 @@ roxygenize_pkg <- function(package.dir,
   roxygen.dir <- normalizePath(roxygen.dir)
 
   for ( hook in hooks ) {
-    cat(sprintf("Applying %s hook ... ", sQuote(hook$name)))
+    cat(sprintf("* Applying %s hook ... ", sQuote(hook$name)))
 
     ## Refresh package content to allow roclets on
     ## output created by previous roclets:

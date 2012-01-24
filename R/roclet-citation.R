@@ -57,7 +57,7 @@ roc_process.citation <- function(roclet, partita, base_path) {
 roc_output.citation <- function(roclet, results, base_path) {
   CITATION <- file.path(base_path, "inst", "CITATION")
 
-  cat("Creating ", CITATION, file, "\n")
+  cat("Creating", CITATION, "\n")
 
   if ( file.exists(CITATION) )
     unlink(CITATION)

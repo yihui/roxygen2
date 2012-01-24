@@ -64,7 +64,8 @@ roc_process.demo <- function(roclet, partita, base_path) {
   if ( length(index) != length(files) ) {
     no_demo <- setdiff(files, sapply(index, "[[", "file"))
     warning("Demo file(s) without @demo tag: ",
-            paste(basename(no_demo), collapse = ", "), call. = FALSE)
+            paste(basename(no_demo), collapse = ", "),
+            call. = FALSE, immediate. = TRUE)
     ## TODO: Set some generic description?
   }
 
@@ -80,7 +81,7 @@ roc_output.demo <- function(roclet, results, base_path) {
 
   INDEX <- file.path(base_path, "demo", "00index")
 
-  cat("Creating ", INDEX, file, "\n")
+  cat("Creating", INDEX, "\n")
 
   if ( file.exists(INDEX) )
     unlink(INDEX)
