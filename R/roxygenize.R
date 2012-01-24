@@ -3,7 +3,7 @@
 #' This is the workhorse function that uses roclets, the built-in document
 #' tranformation functions, to build all documentation for a package.  See
 #' the documentation for the individual roclets, \code{\link{rd_roclet}},
-#' \code{\link{namespace_roclet}} and \code{\link{collate_roclet}}, for 
+#' \code{\link{namespace_roclet}} and \code{\link{collate_roclet}}, for
 #' documentation on how to use each one.
 #'
 #' @param package.dir the package's top directory
@@ -36,8 +36,8 @@ roxygenize <- function(package.dir,
   }
 
   roxygen.dir <- normalizePath(roxygen.dir)
-  
-  parsed <- parse_r_files(package.dir, roxygen.dir)
+
+  parsed <- roc_setup.rd(package.dir, roxygen.dir)
 
   roclets <- str_c(roclets, "_roclet", sep = "")
   for (roclet in roclets) {
@@ -81,7 +81,7 @@ copy.dir <- function(source,
 }
 
 
-parse_r_files <- function(package.dir, roxygen.dir) {
+roc_setup.rd <- function(package.dir, roxygen.dir) {
   r_files <- dir(file.path(roxygen.dir, "R"), "[.Rr]$", full.names = TRUE)
 
   # If description present, use Collate to order the files

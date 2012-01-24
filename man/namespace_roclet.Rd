@@ -103,6 +103,6 @@ roclet <- namespace_roclet()
 }
 \seealso{
   Other roclets: \code{\link{collate_roclet}},
-  \code{\link{rd_roclet}}
+  \code{\link{demo_roclet}}, \code{\link{rd_roclet}}
 }
 

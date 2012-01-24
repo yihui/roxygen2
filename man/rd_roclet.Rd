@@ -189,6 +189,6 @@ roclet <- rd_roclet()
 }
 \seealso{
   Other roclets: \code{\link{collate_roclet}},
-  \code{\link{namespace_roclet}}
+  \code{\link{demo_roclet}}, \code{\link{namespace_roclet}}
 }
 
