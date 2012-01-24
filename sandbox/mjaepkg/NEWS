@@ -1,0 +1,186 @@
+roxygen2 2.2.2
+--------------
+
+* Correctly use keyword `datasets` not `dataset` (Fixes #60)
+
+* Reference classes no longer given incorrect docType (data).
+
+roxygen2 2.2.1
+--------------
+
+* Use unicode escapes in test files so tests pass on all platforms.
+
+* Work around bug in `gsub` in C locale by manually specifying `Encoding()`. 
+
+roxygen2 2.2
+------------
+
+NEW FEATURES
+
+* Package docType will automatically add package alias, if needed. (Fixes #4)
+
+* Data docType will automatically add `datasets` keyword, default usage, and
+  default format. (Fixes #5). Data docType automatically added to data
+  objects.
+
+* New `@encoding` tag for manually setting non-ASCII encodings when needed.
+  (Fixes #7)
+
+
+BUG FIXES
+
+* `write.description()` now tries much harder to respect 
+  users' original DESCRIPTION field formatting instead of forcibly 
+  re-wrapping certain fields at 60 characters.
+
+* `@details` and `@description` now work correctly
+
+* `@useDynLib` now works correctly: 
+
+       @useDynLib packageName routine1 routine2 
+
+   produces
+
+       useDynLib(packageName, routine1)
+       useDynLib(packageName, routine2)
+
+   in the NAMESPACE file, instead of separate (wrong) useDynLib statements as
+   before.
+
+* All namespace import directives now behave in the same way as the export
+  directives, producing multiple single directives instead one multiple
+  directive: `@importClassesFrom pkg a b` now produces 
+  `importClassesFrom(pkg, a)` and `importClassesFrom(pkg, b)`
+
+* In example files included with `@example` you can now use infix operators
+  (e.g. %*%) or other things with %, because they will be preceded by a
+  backslash in the Rd file. This behaviour was already in place for examples
+  directly included with `@examples`.
+
+* Aliases are no longer quoted, and % is escaped with a backslash (Fixes #24).
+  Names also have % escaped (Fixes #50)
+
+* Replacement functions (e.g. `foo<-`) now get correct usage statements:
+  `foo() <- value` instead of `foo()<-value`. (Fixes #38)
+
+* Functions with no arguments now correctly get usage statements (Fixes #35)
+
+* Indentation in examples now preserved (Fixes #27)
+
+* roxygen2 will replace characters that are not valid in filenames with a
+  character substitute, e.g. `[]` becomes `sub`, `<-` becomes `set` (Fixes #6)
+
+* Usage strings use non-breaking spaces to prevent string default values
+  containing whitespace to be split across multiple lines. This may cause
+  problems in the unlikely event that you have default value containing a
+  non-breaking space (`"\uA0"')  (Fixes #21)
+
+* Functions with quoted names now get correct usage statements (Fixes #41)
+
+* Objects that no longer exist are not documented (Fixes #42)
+
+* Errors now display file name and line number of roxygen block to help you
+  find the problem. Thanks to code contributions from Renaud Gaujoux. (Fixes
+  #13)
+
+* Documentation with no untagged text but with `@title`, `@description` and
+  `@details` tags now produces correct output.
+
+roxygen2 2.1
+------------
+
+NEW FEATURES
+
+* package dependencies loaded automatically
+
+* added support for the `@source` tag
+
+BUG FIXES
+
+* `NAMESPACE` file no longer needs to exist
+
+* `Collate` field in `DESCRIPTION` no longer needs to exist
+
+* `=` now recognised as way of assigning functions
+
+* `x$y <- function() {...}` no longer causes error
+
+* `@example` no longer added extra new-lines.
+
+* Correct directory normalisation under windows fixes broken test.
+
+* A special thanks goes to Yihui Xie who contributed all of the fixes and
+  improvements (bar one) in this version!
+
+
+roxygen2 2.0
+------------
+
+MAJOR CHANGES
+
+* now works with run-time details to give more accurate output. This requires
+  that the source code that roxygen is documenting be loaded prior to
+  documentation. roxygen will attempt to do so, but you need to ensure
+  required packages are loaded.
+
+  Run-time data fixes some long standing bugs where roxygen couldn't correctly
+  figure out function usage. We are not aware of any cases where you still
+  need to use the `@usage` tag.
+
+* written in idiomatic R, and uses S3 instead of a homegrown class system.
+
+* roclets build up an internal data structure instead of writing to disk
+  directly. This means that you can now use the `@rdname` tag to merge
+  documentation for multiple functions into one file, and that only unique
+  namespace directives are written to `NAMESPACE` (which makes `@importFrom`
+  much more useful).
+
+* some features have been removed, and may or may not (based on your feedback)
+  be reincluded. These include the callgraph roclet, and `R CMD roxygen`,
+  which only worked on some systems.
+
+* a templating system: use the `@template` tag to insert a `brew` template
+  stored in `man-roxygen`. Template variables can be set using `@templateVar
+  name value` and retrieved from within the template with `<%= name %>`
+
+* extensive use of caching to make repeated runs as fast as possible. To clear
+  caches and guarantee a complete rebuild, use `clear_caches()`.
+
+* parsing of "introduction" (the text before the first tag) has changed. Now
+  the title consists of the first paragraph (i.e. all text before the first
+  empty line), the second paragraph is the description and all others are put
+  in the details. Any component can be overridden with `@title`,
+  `@description` and `@details` as appropriate.
+
+MINOR CHANGES
+
+* `@name` is always output as an alias, even if `@aliases` are used.
+
+* `@export` correctly uses `@method` to generate `@S3method` namespace
+  directive
+
+NEW TAGS
+
+* `@rdname filename` sets the output filename (without extension). Use for
+  functions non-alphanumeric functions (e.g. `[<-`) or if you want to document
+  multiple functions in one file
+
+* `@template templatename` includes a documentation template (see above)
+
+* `@section Section title: contents` includes a section with any title. Don't
+  forget the colon! That separates the title of the section from its contents.
+
+* `@description` and `@details` tags allow you to specify description and
+  details components in a template
+
+* `@family family name` automatically adds see-also cross-references between
+  all functions in a family. A function can belong to multiple families.
+
+* `@inheritParams name` allows you to inherit the documentation for parameters
+  from another function, either within the current package (`function`) or in
+  any other installed package (`package:function`). Currently only supports
+  single inheritance (i.e. you can't inherit from a function that inherits
+  from another function), but you can have multiple @inheritParams tags.
+  
+* `@format` has been implemented; it existed in the roxygen package but was 
+  actually ignored
