@@ -13,6 +13,7 @@
 #'    files.
 #' @param overwrite overwrite target files?
 #' @param unlink.target unlink target directory before processing files?
+#' @param file.ext extension of source files to be processed
 #' @param roclets character vector of roclet names to apply to package
 #' @return \code{NULL}
 #' @rdname roxygenize
@@ -22,6 +23,7 @@ roxygenize <- function(package.dir,
                        copy.package=package.dir != roxygen.dir,
                        overwrite=TRUE,
                        unlink.target=FALSE,
+                       file.ext = "[.Rr]",
                        roclets=c("collate", "namespace", "rd")) {
 
   skeleton <- c(roxygen.dir, file.path(roxygen.dir, "man"))
@@ -36,7 +38,7 @@ roxygenize <- function(package.dir,
   }
 
   roxygen.dir <- normalizePath(roxygen.dir)
-  r_files <- dir(file.path(roxygen.dir, "R"), "[.Rr]$", full.names = TRUE)
+  r_files <- dir(file.path(roxygen.dir, "R"), paste0(file.ext, "$"), full.names = TRUE)
 
   # If description present, use Collate to order the files 
   # (but still include them all, and silently remove missing)
