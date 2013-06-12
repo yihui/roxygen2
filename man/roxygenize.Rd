@@ -6,11 +6,13 @@
   roxygenize(package.dir, roxygen.dir = package.dir,
     copy.package = package.dir != roxygen.dir,
     overwrite = TRUE, unlink.target = FALSE,
+    file.ext = "[.Rr]",
     roclets = c("collate", "namespace", "rd"))
 
   roxygenise(package.dir, roxygen.dir = package.dir,
     copy.package = package.dir != roxygen.dir,
     overwrite = TRUE, unlink.target = FALSE,
+    file.ext = "[.Rr]",
     roclets = c("collate", "namespace", "rd"))
 }
 \arguments{
@@ -26,6 +28,9 @@
 
   \item{unlink.target}{unlink target directory before
   processing files?}
+
+  \item{file.ext}{extension of source files to be
+  processed}
 
   \item{roclets}{character vector of roclet names to apply
   to package}

@@ -1,3 +1,5 @@
+* Added support for other source file extensions.
+
 * `inst` directory not automatically created.  (Fixes #53)
 
 * Explicitly depends on `utils` and `methods` packages to make roxygen more
