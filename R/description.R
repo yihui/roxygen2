@@ -56,7 +56,7 @@ wrap_field_if_necessary <- function(field, value, wrap.threshold = 80L) {
 
   if (longest.line > wrap.threshold) {
     text <- paste0(field, ": ", value)
-    text <- str_wrap(text, exdent = 4, width = wrap.threshold)
+    text <- strwrap(text, exdent = 4, width = wrap.threshold)
   }
 
   return(text)
