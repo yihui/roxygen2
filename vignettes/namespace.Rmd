@@ -42,24 +42,24 @@ Use the following guidelines to decide what to export:
   If you want others to create instances of your class, but not extend it,
   `@export` the constructor function, but not the class.
 
-      ```R
-      # Can extend and create
-      #' @export
-      setClass("A")
+    ```r
+    # Can extend and create
+    #' @export
+    setClass("A")
 
-      # Can extend, but constructor not exported
-      #' @export
-      B <- setClass("B")
+    # Can extend, but constructor not exported
+    #' @export
+    B <- setClass("B")
 
-      # Can create, but not extend
-      #' @export C
-      C <- setClass("C")
+    # Can create, but not extend
+    #' @export C
+    C <- setClass("C")
 
-      # Can create and extend
-      #' @export D
-      #' @exportClass D
-      D <- setClass("D")
-      ```
+    # Can create and extend
+    #' @export D
+    #' @exportClass D
+    D <- setClass("D")
+    ```
 
 * S4 generics: `@export` if you want the generic to be publicly usable.
 
